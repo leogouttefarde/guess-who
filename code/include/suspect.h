@@ -18,6 +18,37 @@ struct liste_suspects {
         struct suspect *queue;
 };
 
+
+/* Genre */
+#define HOMME                   0x0001
+#define FEMME                   0x0002
+
+/* Pilosité */
+#define MOUSTACHE               0x0004
+#define BARBE                   0x0008
+
+/* Coiffure */
+#define COIFFURE_CHAUVE         0x0010
+#define COIFFURE_LONG           0x0020
+#define COIFFURE_COURT          0x0040
+
+/* Couleur cheveux */
+#define CHEVEUX_NOIRS           0x0080
+#define CHEVEUX_CHATAINS        0x0100
+#define CHEVEUX_BLANCS          0x0200
+#define CHEVEUX_ROUX            0x0400
+#define CHEVEUX_BLONDS          0x0800
+
+/* Accessoires */
+#define LUNETTES                0x1000
+#define CHAPEAU                 0x2000
+
+
+#define GENRE                   (HOMME | FEMME)
+#define COIFFURE                (COIFFURE_CHAUVE | COIFFURE_LONG | COIFFURE_COURT)
+#define CHEVEUX                 (CHEVEUX_NOIRS | CHEVEUX_CHATAINS | CHEVEUX_BLANCS | CHEVEUX_ROUX | CHEVEUX_BLONDS)
+
+
 /* Retourne un nouveau suspect initialisé en fonction des paramètres
  * nom et attributs. */
 struct suspect *creer_suspect(const char *nom, ensemble_t attributs);

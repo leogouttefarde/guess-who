@@ -15,7 +15,7 @@ TESTS=$(TESTDIR)/test_chainage $(TESTDIR)/test_ensemble
 
 EXEC=$(BINDIR)/quiestce
 
-all: $(BINDIR)/quiestce
+all: $(EXEC)
 
 # Règle générique
 
@@ -51,3 +51,6 @@ $(TESTDIR)/test_ensemble: $(TESTDIR)/test_ensemble.o $(OBJDIR)/ensemble.o
 
 clean:
 	rm -rf $(EXEC) $(OBJ_FILES) $(TESTS_OBJ) $(TESTS) $(TESTDIR)/*.o
+
+run: all
+	$(EXEC)

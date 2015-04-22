@@ -19,6 +19,10 @@ extern uint16_t ensemble_cardinal(ensemble_t b);
  * l'ensemble b, faux sinon */
 extern bool ensemble_appartient(ensemble_t b, uint16_t numero_elt);
 
+/* Retourne vrai si l'ensemble e2 est inclu dans
+ * l'ensemble e1, faux sinon */
+extern bool ensemble_inclu(ensemble_t e1, uint16_t e2);
+
 /* Retourne un nouvel ensemble correspondant à l'union des ensembles
  * e1 et e2. */
 extern ensemble_t ensemble_union(ensemble_t e1, ensemble_t e2);
