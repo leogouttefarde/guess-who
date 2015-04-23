@@ -143,15 +143,13 @@ void affiche_liste_suspects(struct liste_suspects *l)
 {
         if (l != NULL) {
                 struct suspect *suspect = l->tete;
-                struct suspect *suiv;
 
-                while (suspect) {
-                        suiv = suspect->suiv;
+                while (suspect != NULL) {
 
                         if (suspect->nom != NULL)
                                 printf("%s\n", suspect->nom);
 
-                        suspect = suiv;
+                        suspect = suspect->suiv;
                 }
         }
 }

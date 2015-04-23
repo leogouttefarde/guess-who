@@ -19,6 +19,7 @@ int main(void)
         ensemble_t indices = ensemble_vide();
         const char *mess_questions[] = QUESTIONS;
         const ensemble_t masques[] = MASQUES;
+        struct suspect *suspect, *suiv;
 
         srand(time(NULL));
 
@@ -67,10 +68,10 @@ int main(void)
 
 
                 /* Retrait des suspects innocents de la liste */
-                struct suspect *suspect = liste->tete;
-                struct suspect *suiv;
+                suspect = liste->tete;
 
-                while (suspect) {
+                while (suspect != NULL) {
+
                         suiv = suspect->suiv;
 
                         /* Si une personne ne correspond pas à la description,
@@ -93,7 +94,7 @@ int main(void)
                 printf("\033[32;1m\n%s est coupable.\033[0m\n", liste->tete->nom);
 
         else if (liste->nb_suspects > 1) {
-                printf("\nPlusieurs suspects mais pas de coupable identifiable :\n");
+                printf("\033[37;1m\nPlusieurs suspects mais pas de coupable identifiable :\033[0m\n");
                 affiche_liste_suspects(liste);
         }
         else
