@@ -1,4 +1,11 @@
 
+/**
+ * Fichier : suspect.c
+ * Description : Gestion des suspects
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #include "suspect.h"
 #include "common.h"
 
@@ -13,7 +20,7 @@ struct suspect *creer_suspect(const char *name, ensemble_t attributs)
                 if (suspect != NULL) {
                         suspect->attributs = attributs;
 
-                        /* Allocation du nom */
+                        /* Allocation puis copie du nom */
                         const uint32_t taille = strlen(name);
                         const uint32_t taille_plus = taille + 1;
                         suspect->nom = malloc(taille_plus);
@@ -70,6 +77,7 @@ void ajouter_suspect(struct liste_suspects *liste, struct suspect *suspect)
                         liste->queue = suspect;
                 }
 
+                /* Mise à jour du nombre de suspects */
                 ++liste->nb_suspects;
         }
 }
@@ -81,50 +89,51 @@ void retirer_suspect(struct liste_suspects *liste, struct suspect *suspect)
                 struct suspect *prec = suspect->prec;
 
 
-                // Elément normal de la liste
+                /* Elément normal de la liste */
                 if (prec && suiv) {
                         prec->suiv = suiv;
                         suiv->prec = prec;
                 }
 
-                // Tete
+                /* Tete */
                 else if (!prec && suiv) {
 
-                        // On vérifie si c'est bien la tete
+                        /* On vérifie si c'est bien la tete */
                         if (liste->tete == suspect) {
                                 suiv->prec = prec;
                                 liste->tete = suiv;
                         }
                 }
 
-                // Queue
+                /* Queue */
                 else if (prec && !suiv) {
 
-                        // On vérifie si c'est bien la queue
+                        /* On vérifie si c'est bien la queue */
                         if (liste->queue == suspect) {
                                 prec->suiv = NULL;
                                 liste->queue = prec;
                         }
                 }
 
-                // Ni tete ni queue : élément unique
+                /* Ni queue ni tete : élément unique */
                 else {
                         liste->tete = NULL;
                         liste->queue = NULL;
                 }
 
-                // S'il n'y a qu'un élément,
-                // on s'assure qu'il ne pointe nulle part
+                /* S'il n'y a qu'un élément,
+                 * on s'assure qu'il ne pointe nulle part */
                 if (liste->tete && (liste->tete == liste->queue)) {
                         liste->tete->suiv = NULL;
                         liste->tete->prec = NULL;
                 }
 
-                // Destruction du suspect après retrait
+
+                /* Destruction du suspect retiré */
                 SAFE_FREE(suspect->nom);
                 SAFE_FREE(suspect);
 
-
+                /* Mise à jour du nombre de suspects */
                 if (liste->nb_suspects > 0)
                         --liste->nb_suspects;
         }

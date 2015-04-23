@@ -1,8 +1,15 @@
+
+/**
+ * Fichier : suspect.h
+ * Description : Gestion des suspects
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #ifndef SUSPECT_H
 #define SUSPECT_H
 
 #include "ensemble.h"
-
 
 /* Genre */
 #define HOMME                   0x0001

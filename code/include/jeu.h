@@ -1,13 +1,17 @@
 
+/**
+ * Fichier : jeu.h
+ * Description : Définition des données du jeu qui-est-ce
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #ifndef JEU_H
 #define JEU_H
 
 #include "ensemble.h"
 #include "suspect.h"
 #include "common.h"
-
-
-#define SIZE(n) (sizeof(n) / sizeof(n[0]))
 
 #define NOMS_SUSPECTS {\
         "André",\

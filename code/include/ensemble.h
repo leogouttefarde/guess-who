@@ -1,3 +1,11 @@
+
+/**
+ * Fichier : ensemble.h
+ * Description : Gestion des ensembles
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #ifndef ENSEMBLE_H
 #define ENSEMBLE_H
 

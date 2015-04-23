@@ -1,8 +1,15 @@
 
+/**
+ * Fichier : jeu.c
+ * Description : Programme principal du jeu qui-est-ce
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #include "jeu.h"
 
 
-/* Jeu Qui-est-ce */
+/* Jeu "Qui-est-ce ?" */
 int main(void)
 {
         struct liste_suspects *liste = NULL;
@@ -15,10 +22,12 @@ int main(void)
 
         srand(time(NULL));
 
-        /* Création de la listes des suspects du jeu Qui-est-ce */
+        /* Création de la listes des suspects du jeu qui-est-ce */
         liste = creer_liste_suspects();
         ajout_suspects(liste);
 
+
+        printf("\033[37;1mQui-est-ce ?\033[0m\n\n");
 
         do {
                 /* Tirage aléatoire d'une question */
@@ -41,7 +50,7 @@ int main(void)
                         ensemble_ajouter_elt(&indices, question);
 
                         /* Suppression des questions inutiles
-                           (tout masque contenant l'indice obtenu) */
+                         * (tout masque contenant l'indice obtenu) */
                         for (uint8_t i = 0; i < SIZE(masques); ++i) {
 
                                 if (ensemble_appartient(masques[i], question)) {
@@ -52,7 +61,7 @@ int main(void)
                 }
                 else {
                         /* S'il ne reste plus qu'une possibilité
-                           dans un masque, on en déduit un nouvel indice */
+                         * dans un masque, on en déduit un nouvel indice */
                         deduction_indice(question, &questions, &indices);
                 }
 
@@ -65,8 +74,8 @@ int main(void)
                         suiv = suspect->suiv;
 
                         /* Si une personne ne correspond pas à la description,
-                           on la retire des suspects */
-                        if (!(ensemble_intersection(suspect->attributs, indices) == indices)) {
+                         * on la retire des suspects */
+                        if (!(ensemble_intersection(suspect->attributs, questions) == indices)) {
                                 retirer_suspect(liste, suspect);
                         }
 
@@ -75,7 +84,7 @@ int main(void)
 
 
         /* On arrête de poser des questions quand elles ont toutes été posées
-           ou qu'on a un coupable */
+         * ou qu'on a un coupable */
         } while ((ensemble_cardinal(questions) < nb_quests) && (liste->nb_suspects > 1));
 
 
@@ -88,7 +97,7 @@ int main(void)
                 affiche_liste_suspects(liste);
         }
         else
-                printf("\033[31;1m\nPas de coupable.\033[0m\n");
+                printf("\033[37;1m\nPas de coupable.\033[0m\n");
 
 
         /* Libération de la liste et des suspects */
@@ -105,6 +114,7 @@ void ajout_suspects(struct liste_suspects *liste)
         const ensemble_t attributs[] = ATTRIBUTS_SUSPECTS;
         struct suspect *suspect = NULL;
 
+        /* Création puis ajout de l'ensemble des suspects */
         for (uint8_t i = 0; i < SIZE(suspects); ++i) {
                 suspect = creer_suspect(suspects[i], attributs[i]);
                 ajouter_suspect(liste, suspect);
@@ -119,7 +129,7 @@ void deduction_indice(uint8_t question, ensemble_t *questions, ensemble_t *indic
         for (uint8_t i = 0; i < SIZE(masques); ++i) {
                 ensemble_t masque = masques[i];
 
-                /* Recherche d'un masque qui contient la question */
+                /* Recherche d'un masque qui contienne la question */
                 if (ensemble_appartient(masque, question)) {
                         ensemble_t connus = ensemble_intersection(masque, *questions);
 
@@ -127,11 +137,12 @@ void deduction_indice(uint8_t question, ensemble_t *questions, ensemble_t *indic
                         const uint8_t nb_connus = ensemble_cardinal(connus);
 
                         /* S'il ne reste plus qu'une possibilité
-                           dans un masque, on en déduit un nouvel indice */
+                         * dans un masque, on en déduit un nouvel indice */
                         if (nb_connus == (nb_masque - 1)) {
                                 ensemble_t complementaire = ensemble_complementaire(connus);
                                 ensemble_t indice = ensemble_intersection(masque, complementaire);
 
+                                /* Mémorisation de l'indice déduit */
                                 *indices = ensemble_union(*indices, indice);
                                 *questions = ensemble_union(*questions, indice);
                         }
@@ -142,7 +153,7 @@ void deduction_indice(uint8_t question, ensemble_t *questions, ensemble_t *indic
 }
 
 /* Lit la réponse de l'utilisateur et
-   renvoie oui ou non */
+ * renvoie oui ou non */
 bool lire_reponse()
 {
         bool reponse, erreur;
@@ -151,7 +162,8 @@ bool lire_reponse()
         do {
                 erreur = false;
 
-                /* On vide le flux d'entrée */
+                /* On vide le flux d'entrée après lecture
+                 * du premier caractère */
                 entree = (buf = getchar());
                 while (buf != '\n' && buf != EOF && (buf = getchar()));
 
@@ -172,6 +184,8 @@ bool lire_reponse()
                                 erreur = true;
                                 printf("Erreur de frappe. Répondez par oui ou par non (o/n) : ");
                 }
+
+        /* Gestion des erreurs de frappe */
         } while (erreur);
 
         return reponse;

@@ -1,4 +1,11 @@
 
+/**
+ * Fichier : ensemble.c
+ * Description : Gestion des ensembles
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #include "ensemble.h"
 #include "common.h"
 
@@ -18,6 +25,7 @@ uint16_t ensemble_cardinal(ensemble_t e)
         uint8_t cardinal = 0;
         uint16_t bit = 1;
 
+        /* Comptage du nombre de bits à 1 */
         for (uint8_t i = 0; i < 16; ++i) {
 
                 if (bit & e)
@@ -33,6 +41,7 @@ bool ensemble_appartient(ensemble_t e, uint16_t numero_elt)
 {
         bool appartient = false;
 
+        /* On vérifie si le bit correspondant est à 1 */
         if (e & (1 << numero_elt))
                 appartient = true;
 
