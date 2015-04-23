@@ -1,4 +1,11 @@
 
+/**
+ * Fichier : common.h
+ * Description : Header commun
+ * Auteur : Léo Gouttefarde
+ * Date : 23/04/2015
+ */
+
 #ifndef COMMON
 #define COMMON
 
