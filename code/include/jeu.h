@@ -70,6 +70,32 @@
         }
 
 
+#define QUESTIONS {\
+        "Le coupable est-il un homme",\
+        "Le coupable est-il une femme",\
+        "Le coupable a-t-il une moustache",\
+        "Le coupable a-t-il une barbe",\
+        "Le coupable est-t-il plutôt chauve",\
+        "Le coupable a-t-il les cheveux longs",\
+        "Le coupable a-t-il les cheveux courts",\
+        "Le coupable a-t-il les cheveux noirs",\
+        "Le coupable a-t-il les cheveux chatains",\
+        "Le coupable a-t-il les cheveux blancs",\
+        "Le coupable a-t-il les cheveux roux",\
+        "Le coupable a-t-il les cheveux blonds",\
+        "Le coupable porte-t-il des lunettes",\
+        "Le coupable a-t-il un chapeau"\
+        }
+
+
+/* Ajoute tous les suspects du jeu */
+void ajout_suspects(struct liste_suspects *liste);
+
+/* Déduit un indice à partir de réponses négatives */
+void deduction_indice(uint8_t question, ensemble_t *questions, ensemble_t *indices);
+
+/* Lit la réponse de l'utilisateur et
+   renvoie oui ou non */
 bool lire_reponse();
 
 

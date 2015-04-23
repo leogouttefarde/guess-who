@@ -25,11 +25,10 @@ ensemble_t ensemble_plein(void)
 
 uint16_t ensemble_cardinal(ensemble_t e)
 {
-        const uint8_t taille = sizeof(ensemble_t) * 8;
         uint8_t cardinal = 0;
         uint16_t puissance = 1;
 
-        for (uint8_t i = 0; i < taille; ++i) {
+        for (uint8_t i = 0; i < 16; ++i) {
 
                 if (puissance & e)
                         ++cardinal;
@@ -82,14 +81,11 @@ void ensemble_retirer_elt(ensemble_t *e, uint16_t numero_elt)
 
 void ensemble_afficher(const char *msg, ensemble_t e)
 {
-        const uint8_t taille = sizeof(ensemble_t) * 8;
         uint16_t puissance = 1;
 
-        printf("Ensemble :\n\n");
-        printf("%s\n\n", msg);
+        printf("Ensemble : %s\n", msg);
 
-
-        for (uint8_t i = 0; i < taille; ++i) {
+        for (uint8_t i = 0; i < 16; ++i) {
 
                 if (puissance & e)
                         printf("1");
@@ -100,5 +96,5 @@ void ensemble_afficher(const char *msg, ensemble_t e)
                 puissance *= 2;
         }
 
-        printf("\n\n\n");
+        printf("\n\n");
 }

@@ -11,8 +11,15 @@ struct suspect *creer_suspect(const char *name, ensemble_t attributs)
                 suspect = calloc(1, sizeof(struct suspect));
 
                 if (suspect != NULL) {
-                        suspect->nom = (char*)name;
                         suspect->attributs = attributs;
+
+                        /* Allocation du nom */
+                        const uint32_t taille = strlen(name);
+                        const uint32_t taille_plus = taille + 1;
+                        suspect->nom = malloc(taille_plus);
+
+                        if (suspect->nom)
+                                strncpy(suspect->nom, name, taille_plus);
                 }
         }
 
@@ -34,8 +41,7 @@ void detruire_liste_suspects(struct liste_suspects **l)
 
                 /* Libération de tous les suspects */
                 while (suspect) {
-                        // Si allocation dynamique du nom
-                        // SAFE_FREE(suspect->nom);
+                        SAFE_FREE(suspect->nom);
 
                         suiv = suspect->suiv;
                         SAFE_FREE(suspect);
@@ -115,6 +121,7 @@ void retirer_suspect(struct liste_suspects *liste, struct suspect *suspect)
                 }
 
                 // Destruction du suspect après retrait
+                SAFE_FREE(suspect->nom);
                 SAFE_FREE(suspect);
 
 
@@ -129,16 +136,11 @@ void affiche_liste_suspects(struct liste_suspects *l)
                 struct suspect *suspect = l->tete;
                 struct suspect *suiv;
 
-                printf("Liste de %d suspects :\n\n", l->nb_suspects);
-
                 while (suspect) {
                         suiv = suspect->suiv;
 
                         if (suspect->nom != NULL)
                                 printf("%s\n", suspect->nom);
-
-                        else
-                                printf("Suspect sans nom");
 
                         suspect = suiv;
                 }
