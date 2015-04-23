@@ -67,9 +67,9 @@ int main(void)
                 }
 
 
-                /* Retrait des suspects innocents de la liste */
                 suspect = liste->tete;
 
+                /* Retrait des suspects innocents de la liste */
                 while (suspect != NULL) {
 
                         suiv = suspect->suiv;
