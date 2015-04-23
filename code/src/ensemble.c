@@ -3,16 +3,6 @@
 #include "common.h"
 
 
-ensemble_t puissance(uint16_t numero_elt)
-{
-        ensemble_t puissance = 1;
-
-        for (uint16_t i = 1; i <= numero_elt; ++i)
-                puissance *= 2;
-
-        return puissance;
-}
-
 ensemble_t ensemble_vide(void)
 {
         return 0;
@@ -26,14 +16,14 @@ ensemble_t ensemble_plein(void)
 uint16_t ensemble_cardinal(ensemble_t e)
 {
         uint8_t cardinal = 0;
-        uint16_t puissance = 1;
+        uint16_t bit = 1;
 
         for (uint8_t i = 0; i < 16; ++i) {
 
-                if (puissance & e)
+                if (bit & e)
                         ++cardinal;
 
-                puissance *= 2;
+                bit <<= 1;
         }
 
         return cardinal;
@@ -43,15 +33,10 @@ bool ensemble_appartient(ensemble_t e, uint16_t numero_elt)
 {
         bool appartient = false;
 
-        if (e & puissance(numero_elt))
+        if (e & (1 << numero_elt))
                 appartient = true;
 
         return appartient;
-}
-
-bool ensemble_inclu(ensemble_t e1, uint16_t e2)
-{
-        return (ensemble_intersection(e1, e2) == e2);
 }
 
 ensemble_t ensemble_union(ensemble_t e1, ensemble_t e2)
@@ -71,29 +56,29 @@ ensemble_t ensemble_complementaire(ensemble_t e)
 
 void ensemble_ajouter_elt(ensemble_t *e, uint16_t numero_elt)
 {
-        *e |= puissance(numero_elt);
+        *e |= (1 << numero_elt);
 }
 
 void ensemble_retirer_elt(ensemble_t *e, uint16_t numero_elt)
 {
-        *e &= ensemble_complementaire(puissance(numero_elt));
+        *e &= ensemble_complementaire(1 << numero_elt);
 }
 
 void ensemble_afficher(const char *msg, ensemble_t e)
 {
-        uint16_t puissance = 1;
+        uint16_t bit = 1;
 
         printf("Ensemble : %s\n", msg);
 
         for (uint8_t i = 0; i < 16; ++i) {
 
-                if (puissance & e)
-                        printf("1");
+                if (bit & e)
+                        putchar('1');
 
                 else
-                        printf("0");
+                        putchar('0');
 
-                puissance *= 2;
+                bit <<= 1;
         }
 
         printf("\n\n");

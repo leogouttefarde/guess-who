@@ -3,21 +3,6 @@
 
 #include "ensemble.h"
 
-/* Suspect du jeu Qui est-ce. */
-struct suspect {
-        char *nom;
-        ensemble_t attributs;
-        struct suspect *suiv;
-        struct suspect *prec;
-};
-
-/* Liste doublement chainée de suspects. */
-struct liste_suspects {
-        uint16_t nb_suspects;
-        struct suspect *tete;
-        struct suspect *queue;
-};
-
 
 /* Genre */
 #define HOMME                   0x0001
@@ -43,10 +28,27 @@ struct liste_suspects {
 #define LUNETTES                0x1000
 #define CHAPEAU                 0x2000
 
-
+/* Masques */
 #define GENRE                   (HOMME | FEMME)
 #define COIFFURE                (COIFFURE_CHAUVE | COIFFURE_LONG | COIFFURE_COURT)
-#define CHEVEUX                 (CHEVEUX_NOIRS | CHEVEUX_CHATAINS | CHEVEUX_BLANCS | CHEVEUX_ROUX | CHEVEUX_BLONDS)
+#define CHEVEUX                 (CHEVEUX_NOIRS | CHEVEUX_CHATAINS | CHEVEUX_BLANCS \
+                                | CHEVEUX_ROUX | CHEVEUX_BLONDS)
+
+
+/* Suspect du jeu Qui est-ce. */
+struct suspect {
+        char *nom;
+        ensemble_t attributs;
+        struct suspect *suiv;
+        struct suspect *prec;
+};
+
+/* Liste doublement chainée de suspects. */
+struct liste_suspects {
+        uint16_t nb_suspects;
+        struct suspect *tete;
+        struct suspect *queue;
+};
 
 
 /* Retourne un nouveau suspect initialisé en fonction des paramètres

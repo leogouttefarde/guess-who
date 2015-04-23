@@ -66,7 +66,7 @@ int main(void)
 
                         /* Si une personne ne correspond pas à la description,
                            on la retire des suspects */
-                        if (!ensemble_inclu(suspect->attributs, indices)) {
+                        if (!(ensemble_intersection(suspect->attributs, indices) == indices)) {
                                 retirer_suspect(liste, suspect);
                         }
 
