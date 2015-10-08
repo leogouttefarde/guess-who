@@ -75,20 +75,18 @@ void ensemble_retirer_elt(ensemble_t *e, uint16_t numero_elt)
 
 void ensemble_afficher(const char *msg, ensemble_t e)
 {
-        uint16_t bit = 1;
+        uint16_t bit = 0x8000;
 
         printf("Ensemble : %s\n", msg);
 
-        for (uint8_t i = 0; i < 16; ++i) {
-
+        do {
                 if (bit & e)
                         putchar('1');
 
                 else
                         putchar('0');
 
-                bit <<= 1;
-        }
+        } while (bit >>= 1);
 
         printf("\n\n");
 }
